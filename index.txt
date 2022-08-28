@@ -1,0 +1,32 @@
+Page 1 : Login Page
+id 
+Pass 
+Login and clear 
+
+>> Take in data if things are okay 
+Page 2: Data Entry Screen 
+(Key in code of the product for eg. )
+customer can max buy 5 products but n no of units
+
+5 fields one after other 
+have a total
+code can be added 1 by 1 
+
+
+Page 3 : 
+Invoice with the total 
+
+MISC : no to words converter and also show amount in words
+
+constraint: 
+
+5 operator 
+create template 
+max 5 products 
+30 products 
+max units = acc to us 
+let us assume customer purchase more than availabe throw an error 
+
+enhancement : 
+
+

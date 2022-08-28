@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../CSS/page2.css" />
+        <script src="../JS/index.js"></script>
+    </head>
+    <body>
+        <div class="grid-container">
+            <div class="header">
+                <h6 id="logo-id">LOGO AND TITLE</h6>
+                <label for="code-id">CODE: </label><br />
+                <input id="code-id" type="number" name="code-id" />
+                <center>
+                    <button id="add-itm" type="button" onclick="addItem()">
+                        Add Item
+                    </button>
+                    <button id="remove-itm" type="button">Remove Item</button>
+                </center>
+                <label for="qt-id">QUANTITY: </label> <br />
+                <input id="qt-id" type="number" name="qt-id" />
+            </div>
+
+            <div class="left" style="background-color: #aaa">
+                Prod.No.<br />
+            </div>
+            <div class="middle" style="background-color: #bbb">
+                Product Name<br />
+            </div>
+            <div class="right" style="background-color: #ccc">Amount<br /></div>
+
+            <!-- <div class="footer"></div> -->
+
+            <div class="footer">
+                <p id="amount-id">Total Amount:</p>
+
+                <p onclick="generateInvoice()">Generate Invoice</p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Acme grocers</title>
+        <!-- <link rel="stylesheet" href="../CSS/index.css" /> -->
+        <link rel="stylesheet" href="../CSS/index_new.css" />
+
+        <script src="../JS/index.js"></script>
+
+        <!-- <script src="index.js"></script> -->
+        <!-- <script>
+            function init() {
+                document
+                    .getElementById("submit-bt")
+                    .addEventListener("click", myFunction);
+            }
+            myFunction = () => {
+                window.location.href = "page2.html";
+            };
+        </script> -->
+    </head>
+    <body>
+        <div id="title-i">LOGIN</div>
+        <div id="logo"></div>
+
+        <form onsubmit="return register(event)">
+            <div class="container">
+                <lable for="uname">Username</lable>
+                <input
+                    id="uname"
+                    type="text"
+                    placeholder="Enter Username"
+                    name="uname"
+                    required
+                />
+
+                <label for="input-pass">Passowrd</label>
+                <input
+                    id="input-pass"
+                    type="password"
+                    placeholder="Enter Password"
+                    name="psw"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                    required
+                    onkeyup="onKeyUp()"
+                    onblur="onBlur()"
+                    onfocus="onFocus()"
+                />
+                <!-- <input
+                    id="submit-bt"
+                    type="button"
+                    value="LOGIN"
+                    name="submit-bt"
+                    onsubmit="register()"
+                /> -->
+                <button
+                    id="submit-bt"
+                    type="submit"
+                    value="LOGIN"
+                    name="submit-bt"
+                    onsubmit="return register(event)"
+                >
+                    LOGIN
+                </button>
+            </div>
+        </form>
+        <div id="login-message">
+            <h3>Password must contain the following:</h3>
+            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+            <p id="capital" class="invalid">
+                A <b>capital (uppercase)</b> letter
+            </p>
+            <p id="number" class="invalid">A <b>number</b></p>
+            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+        </div>
+    </body>
+</html>
+<!-- <button
+                    id="submit-bt"
+                    type="submit"
+                    value="LOGIN"
+                    name="submit-bt"
+                >
+                    LOGIN
+                </button> -->
