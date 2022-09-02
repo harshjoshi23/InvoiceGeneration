@@ -2,3 +2,50 @@
     /* align-content: center; */
     text-align: center;
 }
+
+* {
+    box-sizing: border-box;
+    padding: 0.125rem;
+    /* padding: 2px; */
+}
+
+.main {
+    text-align: center;
+    /* padding: 0.625rem; */
+}
+
+#operator_info {
+    text-align: left;
+}
+
+.invoiceTable {
+    /* l-r top-bottom */
+    padding: 1rem 0.5rem;
+    border: 0.125rem solid black;
+    border-radius: 0.5rem;
+}
+
+.table {
+    padding: 1rem 0.5rem;
+    border: 0.125rem solid black;
+    border-radius: 0.5rem;
+    align-content: center;
+}
+
+td {
+    padding: 1rem 0.5rem;
+    border: 1px solid black;
+    color: blue;
+}
+
+#bill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+p {
+    font-size: 1rem;
+    font-weight: 800;
+}

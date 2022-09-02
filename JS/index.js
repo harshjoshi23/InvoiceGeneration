@@ -55,11 +55,10 @@ function onKeyUp() {
 }
 
 var users = [
-    { userName: "User1", pass: "Userpass1" },
-    { userName: "User2", pass: "Userpass2" },
-    { userName: "User3", pass: "Userpass3" },
-    { userName: "User4", pass: "Userpass4" },
-    { userName: "User5", pass: "Userpass5" },
+    // ADD USERS
+    { userName: "Prateek", pass: "Prateek1" },
+    { userName: "Prateek2", pass: "Prateek2" },
+    { userName: "Prateek3", pass: "Prateek3" },
 ];
 
 var CurrentUser;
@@ -73,18 +72,30 @@ const buildInvoice = () => {
 
     let bill = document.getElementById("bill");
     let opUser = document.getElementById("operator_info");
-
-    opUser.innerHTML += user.userName + "   " + user.pass;
+    opUser.innerHTML +=
+        "<p>Username : " +
+        user.userName +
+        "  <br> Password : " +
+        user.pass +
+        "<br> Just chhill won't show the password in prod ;) </p>";
+    let stringHtml =
+        "<center><table class='invoiceTable'><tbody><tr><td> Product ID </td> <td> Product Name </td><td> Amount</td></tr>";
     cart.forEach((item) => {
-        bill.innerHTML +=
-            "<p>" +
-            item.name +
-            "  -  " +
-            item.orderId +
-            "  -  " +
-            item.totalAmount +
-            "</p>";
+        stringHtml += `<tr><td>${item.orderId}</td> <td>${item.name}</td><td>${item.totalAmount}</td></tr>`;
     });
+
+    let netamount = 0;
+    cart.forEach((item) => {
+        netamount += item.totalAmount;
+    });
+
+    stringHtml += `<tr><td colspan=3 style="text-align:center;">Bill Amount: ${netamount}</td></tr>`;
+
+    stringHtml += "</tbody></table></center>";
+
+    bill.innerHTML += stringHtml;
+
+    console.log("Bill Layout", stringHtml);
 
     console.log("clickFun", cart);
 };
@@ -96,8 +107,6 @@ const generateInvoice = () => {
     user = JSON.parse(user);
 
     let opUser = document.getElementById("operator_info");
-    opUser.innerHTML += user.userName + "   " + user.pass;
-
     console.log("clickFun", user);
 };
 
@@ -111,55 +120,36 @@ const register = (event) => {
         ({ userName, pass }) => userName === userid && pass === password
     );
     window.localStorage.setItem("user", JSON.stringify(condUser));
-
-    // CurrentUser = condUser;
     if (condUser) {
         window.location.href = "http://127.0.0.1:5500/HTML/page2.html";
     } else {
         alert("Wrong Credentials: ");
         CurrentUser = condUser;
     }
-    // if(users[{userName}] == userid && password[{password}] == ){
-
-    // }
 };
-
-//COMMENTS//
 
 const inventory = [
     {
-        orderId: 101,
-        amount: 100,
-        name: "Apple",
-        quantity: 19,
+        orderId: 1,
+        amount: 1,
+        name: "",
+        quantity: 1,
     },
     {
-        orderId: 102,
-        amount: 200,
-        name: "Bpple",
-        quantity: 29,
+        orderId: 2,
+        amount: 2,
+        name: "",
+        quantity: 2,
     },
     {
-        orderId: 103,
-        amount: 400,
-        name: "Cpple",
-        quantity: 9,
-    },
-    {
-        orderId: 104,
-        amount: 1000,
-        name: "Dpple",
-        quantity: 119,
-    },
-    {
-        orderId: 105,
-        amount: 10,
-        name: "Fpple",
-        quantity: 9,
+        orderId: 3,
+        amount: 3,
+        name: "",
+        quantity: 3,
     },
 ];
 
-const cart = [];
+let cart = [];
 
 const addItem = () => {
     let orderId = document.getElementById("code-id").value;
@@ -176,42 +166,128 @@ const addItem = () => {
     const product = inventory.find(
         (itemBanana) => itemBanana.orderId === parseInt(orderId)
     );
+    let updatedCart;
+    let cartProdcut = cart.find(
+        (itemBanana) => itemBanana.orderId === parseInt(orderId)
+    );
+    if (cartProdcut) {
+        updatedCart = cart.map((item) => {
+            if (item.orderId !== parseInt(orderId)) {
+                return item;
+            }
+            return {
+                ...item,
+                prodQuantity: item.quantity + quantity,
+                totalAmount: (item.quantity + quantity) * item.amount,
+            };
+        });
+    } else {
+        updatedCart = [
+            ...cart,
+            {
+                ...product,
+                prodQuantity: quantity,
+                totalAmount: quantity * product.amount,
+            },
+        ];
+    }
 
-    console.log(product);
-    // if (product.quantity < quantity) {
-    //     alert("Max qt exceeded");
-    // }
+    cart = updatedCart;
 
-    let totalAmount = product.amount * quantity;
+    inventory.forEach((item, i) => {
+        if (parseInt(orderId) === item.orderId) {
+            inventory[i].quantity -= quantity;
+        }
+    });
+
+    let netamount = 0;
+    let prodIdStr = `Prod ID : <p>`;
+    let prodNameStr = `Product Name <p>`;
+    let prodQuantityStr = `Quantity <p>`;
+    let prodAmountStr = `Amount :<p>`;
+
+    cart.forEach((item) => {
+        prodIdStr += item.orderId + "<br>";
+        prodNameStr += item.name + "<br>";
+        prodQuantityStr += item.prodQuantity + "<br>";
+        prodAmountStr += item.totalAmount + "<br>";
+        netamount += item.totalAmount;
+    });
+
+    prodIdStr += `</p>`;
+    prodNameStr += `</p>`;
+    prodQuantityStr += `</p>`;
+    prodAmountStr += `</p>`;
+
+    window.localStorage.setItem("cart", JSON.stringify(cart));
+
+    prodNoNode[0].innerHTML = prodIdStr;
+    prodNameNode[0].innerHTML = prodNameStr;
+    amount[0].innerHTML = prodAmountStr;
+
+    console.log("Prod Name :::", prodNameStr);
+    // console.log("netamount :::", netamount);
+    // console.log("Product is :::", product);
+    // console.log("Prod No. :::", prodNoNode[0]);
+    // console.log("finalSumNode  :::", finalSumNode);
+    window.localStorage.setItem("cart", JSON.stringify(cart));
+    finalSumNode.innerHTML = "Total Amount : <br>" + netamount;
+};
+
+const removeItem = () => {
+    let orderId = document.getElementById("code-id").value;
+    let quantity = document.getElementById("qt-id").value;
+    let prodNoNode = document.getElementsByClassName("left");
+    let prodNameNode = document.getElementsByClassName("middle");
+    let amount = document.getElementsByClassName("right");
+    let finalSumNode = document.getElementById("amount-id");
+
+    // product jo user ko add karna hai
+    const updatedCart = cart.filter(
+        (item) => item.orderId !== parseInt(orderId)
+    );
+
+    // let totalAmount = product.amount * quantity;
     // In place of one total amount we can also have a key value
 
     inventory.forEach((item, i) => {
         if (parseInt(orderId) === item.orderId) {
             // alert("This is your item", item);
-            inventory[i].quantity -= quantity;
+            inventory[i].quantity += quantity;
         }
     });
 
-    cart.push({
-        name: product.name,
-        orderId: product.orderId,
-        totalAmount,
-    });
+    cart = updatedCart;
 
-    let abhiTakCartNetAmount = 0;
+    let netamount = 0;
+    let prodIdStr = `Prod ID : <p>`;
+    let prodNameStr = `Product Name <p>`;
+    let prodAmountStr = `Amount :<p>`;
+
     cart.forEach((item) => {
-        abhiTakCartNetAmount += item.totalAmount;
+        prodIdStr += item.orderId + "<br>";
+        prodNameStr += item.name + "<br>";
+        prodAmountStr += item.totalAmount + "<br>";
+        netamount += item.totalAmount;
     });
-    // console.log("abhiTakCartNetAmount :::", abhiTakCartNetAmount);
-    // console.log("Product is :::", product);
-    // console.log("Prod No. :::", prodNoNode[0]);
-    // console.log("finalSumNode  :::", finalSumNode);
-    window.localStorage.setItem("cart", JSON.stringify(cart));
-    prodNoNode[0].innerHTML += "<br>" + product.orderId;
-    prodNameNode[0].innerHTML += "<br>" + product.name;
-    amount[0].innerHTML += "<br>" + product.amount;
 
-    finalSumNode.innerHTML = "Total Amount : <br>" + abhiTakCartNetAmount;
+    prodIdStr += `</p>`;
+    prodNameStr += `</p>`;
+    prodAmountStr += `</p>`;
+
+    // console.log("netamount :::", netamount);
+    // console.log("Product is :::", product);
+    // console.log("finalSumNode  :::", finalSumNode);
+
+    window.localStorage.setItem("cart", JSON.stringify(cart));
+
+    prodNoNode[0].innerHTML = prodIdStr;
+    prodNameNode[0].innerHTML = prodNameStr;
+    amount[0].innerHTML = prodAmountStr;
+    console.log("Prod Name :::", prodNameNode[0]);
+    console.log("Prod No. :::", cart);
+
+    finalSumNode.innerHTML = "Total Amount : <br>" + netamount;
 };
 
 // document.getElementById("submit-bt").addEventListener("click", myFunction);
